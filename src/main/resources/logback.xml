@@ -1,0 +1,20 @@
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/quiz.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/quiz.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>>
+            <maxFileSize>1MB</maxFileSize>
+            <totalSizeCap>20MB</totalSizeCap>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} == %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <root level="trace">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
