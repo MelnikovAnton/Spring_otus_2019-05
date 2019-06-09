@@ -10,6 +10,9 @@ import ru.otus.hw1.services.DataValidator;
 import ru.otus.hw1.services.Quiz;
 import ru.otus.hw1.utils.DataValidationException;
 
+import java.util.Locale;
+import java.util.Properties;
+
 @Slf4j
 public class Main {
 
@@ -18,6 +21,8 @@ public class Main {
         log.info("file encodind before : {}",System.getProperty("file.encoding"));
         System.setProperty("file.encoding", "UTF-8");
         log.info("file encodind after: {} ",System.getProperty("file.encoding"));
+
+
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(Config.class);
         DataValidator validator = context.getBean(DataValidator.class);

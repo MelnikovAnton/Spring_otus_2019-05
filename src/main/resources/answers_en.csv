@@ -1,0 +1,298 @@
+Id,questionId,isCorrect,Answer
+2,1,f,On the territory of Moscow and Samara
+3,1,t,On the territory of modern Ukraine
+4,1,f,On the territory of Khabarovsk and Vladivostok
+5,2,f,Peter the Great
+6,2,t,the old Russian state was created as a result of the unification of a number of East Slavic and Fino-Ugric tribes under the rule of princes of the Rurik dynasty
+7,2,f,Yaroslav the Wise
+8,3,f,Moscow
+9,3,t,Kiev
+10,3,f,Novogorod
+11,4,t,988 g.
+12,4,f,995 g.
+13,4,f,999 g.
+14,5,f,Yaroslav Vladimirovich (Wise)
+15,5,t,Vladimir I Svyatoslavovich
+16,5,f,Alexander Nevsky
+17,6,f,Crescent Moon
+18,6,f,six-Pointed star (star of David)
+19,6,t,Orthodox Cross
+20,7,t,"St. Sophia Cathedral in Kiev, Saint Sophia Cathedral in Veliky Novgorod, the Cathedral of the assumption Kiev-Pechersk monastery, the Church of the tithes, 3-Chapter five-naval Cathedral of St. Sophia, the Church of St. Irene and of the great Martyr George, the Holy Transfiguration Cathedral in Chernigov"
+21,7,f,"Cathedral of Christ the Saviour, St. Basil's Cathedral"
+22,7,f,"Church of the Savior on Blood, St. Isaac's Cathedral"
+23,8,t,Golden Horde
+24,8,f,China
+25,8,f,Palestine
+26,9,t,"the Great Russian military leader and defender of the Russian land. Prince of Novgorod (1236-1259), Grand Duke of Kiev (1249-1263), Grand Duke of Vladimir (1252-1263). His name is associated with victories over Swedes (the Neva fight, 1240) and over the German knights (Ice slaughter, 1242)."
+27,9,f,President of Russia
+28,9,f,First Secretary of the CPSU Central Committee
+29,10,f,1 September 1940
+30,10,t,8 September 1380
+31,10,f,26 August 1812
+32,11,f,German troops
+33,11,f,Golden Horde
+34,11,t,Russian troops led by Dmitry Donskoy
+35,12,f,Kiev
+36,12,t,Moscow
+37,12,f,Novgorod
+38,13,t,in the middle of the XV century
+39,13,f,16 century
+40,13,f,13 century
+41,14,f,1460 g.
+42,14,f,1492 g.
+43,14,t,1480 g.
+44,15,t,Ivan the terrible
+45,15,f,Ivan Tsarevich
+46,15,f,Ivan Ivanovich
+47,16,f,Daniel Chernov
+48,16,t,Andrey Rublev
+49,16,f,Kazimir Malevich
+50,17,t,Kremlin
+51,17,f,Bastion
+52,17,f,Red square
+53,18,f,In the eighth century
+54,18,f,In the XIX century
+55,18,t,In the XVII century
+56,19,f,In 1945
+57,19,t,October 1612
+58,19,f,In 1812.
+59,20,t,Romanov Dynasty
+60,20,f,of the Rurik Dynasty
+61,20,f,Tudor Dynasty
+62,21,f,Alexander I
+63,21,t,Peter I
+64,21,f,Nicholas II
+65,22,f,Moscow
+66,22,f,Kiev
+67,22,t,St. Petersburg
+68,23,t,In Moscow
+69,23,f,In St. Petersburg
+70,23,f,In Yekaterinburg
+71,24,t,Lomonosov M. V.
+72,24,f,Mendeleeva D. I.
+73,24,f,Sakharova A. D.
+74,25,f,In 1710 under Peter the great
+75,25,t,"April 8, 1783 Catherine II signed the Manifesto 'On the accession of the Crimean Peninsula, Taman island and the entire Kuban side under the Russian power'"
+76,25,f,February 12, 1905 under Nicholas II
+77,26,f,Russian Emperor
+78,26,t,"the Great Russian commander, military theorist, national hero of Russia"
+79,26,f,Great Russian artist
+80,27,t,the bronze horseman, monument to Peter I
+81,27,f,Catherine II
+82,27,f,Nevsky gate
+83,28,f,Moscow
+84,28,t,St. Petersburg
+85,28,f,Yekaterinburg
+86,29,f,In 1941.
+87,29,t,In 1812.
+88,29,f,In 1921.
+89,30,t,battle of Borodino
+90,30,f,battle of Stalingrad
+91,30,f,Battle of Moscow
+92,31,t,Russia
+93,31,f,France
+94,31,f,Germany
+95,32,f,Suvorov A.V.
+96,32,t,that is great!
+97,32,f,Zhukov G. K.
+98,33,t,"Decembrists – representatives of the nobility, for the first time in Russia advocated the restriction of autocracy and the elimination of serfdom, raised December 14, 1825 an uprising against autocracy and serfdom"
+99,33,f,Citizens of Russia, born in the month of December
+100,33,f,Birds arriving in Russia in December
+101,34,f,In 1917
+102,34,t,In 1861.
+103,34,f,In 1905
+104,35,f,Alexander I
+105,35,f,Nicholas II
+106,35,t,Alexander II
+107,36,t,"In the 19th century, in 1880"
+108,36,f,In the 20th century
+109,36,f,In the 16th century
+110,37,f,the Great Russian inventor
+111,37,f,the Great Russian scientist
+112,37,t,"the Great Russian poet, playwright and novelist"
+113,38,f,Lomonosov M. V.
+114,38,t,Mendeleev D. I.
+115,38,f,Kurchatov I. V.
+116,39,t,"Russian writer and thinker revered as one of the greatest writers world, a participant defense Sevastopol"
+117,39,f,Russian composer
+118,39,f,Russian scientist
+119,40,f,Russian writer and thinker
+120,40,t,"Russian composer, conductor, teacher, music and public figure, music journalist"
+121,40,f,Russian nuclear physicist
+122,41,f,the Great Russian poet
+123,41,f,Great Russian composer and conductor
+124,41,t,"Russian writer, thinker, philosopher and publicist, classic of Russian literature and one of the best novelists of world importance"
+125,42,f,Hinduism
+126,42,t,"Christianity (mainly Orthodoxy, also Catholics and Protestants), as well as Islam and Buddhism"
+127,42,f,"Judaism, Juche"
+128,43,f,Islam
+129,43,f,Catholicism
+130,43,t,Orthodoxy
+131,44,t,In 1905
+132,44,f,In 1917
+133,44,f,In 1991
+134,45,f,"The Civil war in Russia began, the Provisional government was overthrown"
+135,45,t,"New state bodies appeared — the beginning of the development of parliamentarism; some restriction of autocracy; democratic freedoms were introduced, censorship was abolished, trade unions and legal political parties were allowed; the bourgeoisie was able to participate in the political life of the country; the situation of workers was improved, wages were increased, the working day decreased to 9-10 hours; repayments of peasants were canceled, freedom of movement was expanded; the power of Zemstvo chiefs was limited"
+136,45,f,"the government formed by the II all-Russian Congress of Soviets came To power, the absolute majority of whose delegates were the Bolsheviks"
+137,46,t,Lenin V. I.
+138,46,f,Trotsky L, D,
+139,46,f,Sverdlov Ya, M,
+140,47,f,1905-1907
+141,47,t,1914-1918
+142,47,f,1941-1945
+143,48,f,"Russian musician, generally recognized classic of classical music"
+144,48,f,"Russian inventor who designed the first aircraft"
+145,48,t,"Russian writer, a recognized classic of world literature, a doctor by profession, honorary academician of the Imperial Academy of Sciences in the Category of fine literature, one of the most famous playwrights in the world"
+146,49,f,Sikorsky Igor Ivanovich
+147,49,t,Popov Alexander Stepanovich
+148,49,f,Korolev Sergey Pavlovich
+149,50,f,Moscow art theatre. A. P. Chekhov
+150,50,t,Bolshoi theatre (State double order of Lenin academic Bolshoi theatre of the Russian Federation)
+151,50,f,Vakhtangov Theatre
+152,51,f,Velvet revolution
+153,51,f,Flower revolution
+154,51,t,the Great October socialist revolution
+155,52,t,Nicholas II
+156,52,f,Nicholas I
+157,52,f,Alexander III
+158,53,f,Liberal democratic party of Russia
+159,53,t,Russian social democratic workers party (Bolsheviks)
+160,53,f,United Russia
+161,54,t,USSR - Union of Soviet Socialist Republics
+162,54,f,RSFSR - Russian socialist Federal Soviet Republic
+163,54,f,USA - United States of America
+164,55,f,Khrushchev N. S.
+165,55,t,Lenin V. I.
+166,55,f,Stalin I. V.
+167,56,f,monopolization Policy
+168,56,f,Politics, engineering
+169,56,t,industrialization Policy
+170,57,f,Recent economic policy (NEP)
+171,57,t,collectivization Policy
+172,57,f,Politics culture agriculture
+173,58,t,the number of illiterate people
+174,58,f,and many professors
+175,58,f,More people with higher education
+176,59,f,1914,-1918,
+177,59,f,1922,-1925,
+178,59,t,1941,-1945,
+179,60,f,"Italy, Japan"
+180,60,t,"USA, great Britain also included the Mongolian people's Republic and the Tuvan people's Republic"
+181,60,f,"Romania, Finland"
+182,61,t,battle of Stalingrad
+183,61,f,Battle of Moscow
+184,61,f,battle of Kursk
+185,62,t,"Soviet military leaders, commanders of the great Patriotic War, marshals of the Soviet Union"
+186,62,f,Famous Soviet writers-playwrights
+187,62,f,by Soviet composers who wrote famous musical works around the world
+188,63,f,UK
+189,63,f,Germany
+190,63,t,Union of Soviet Socialist Republics (USSR)
+191,64,t,In Berlin
+192,64,f,In Moscow
+193,64,f,In London
+194,65,f,1 million people
+195,65,t,"26,6 million people"
+196,65,f,22 million people
+197,66,f,international women's day
+198,66,f,New year
+199,66,t,victory Day
+200,67,t,In 1954 at the initiative of Nikita Khrushchev
+201,67,f,In 1968 on the initiative of Leonid Brezhnev
+202,67,f,In 1991 on the initiative of Mikhail Gorbachev
+203,68,f,Tsiolkovsky
+204,68,t,Korolev Sergey Pavlovich
+205,68,f,Gagarin Yuri Alekseevich
+206,69,f,Titov, Gherman Stepanovich
+207,69,t,Gagarin Yuri Alekseevich
+208,69,f,Leonov Alexey Arkhipovich
+209,70,t,12 April 1961
+210,70,f,9 may 1945
+211,70,f,7 November 1978
+212,71,t,Tereshkova Valentina Vladimirovna
+213,71,f,Serova Elena Olegovna
+214,71,f,Furtseva Ekaterina Alekseevna
+215,72,f,Universiade
+216,72,f,ice hockey world championship
+217,72,t,Summer Olympic games
+218,73,t,"Perestroika, glasnost"
+219,73,f,Military and economic reform
+220,73,f,Cultural and family reform
+221,74,f,Yeltsin, Boris Nikolayevich
+222,74,t,Mikhail Gorbachev
+223,74,f,Putin Vladimir Vladimirovich
+224,75,f,16,
+225,75,t,15
+226,75,f,14,
+227,76,f,1990,
+228,76,f,1992,
+229,76,t,1991,
+230,77,t,Commonwealth of independent States (CIS))
+231,77,f,United to form a Commonwealth (ESG)
+232,77,f,State of the Eurasian Commonwealth (EGS)
+233,78,f,"Soviet and Russian musician, conductor, composer"
+234,78,t,"Soviet and Russian writer, playwright, publicist, poet, public and political figure"
+235,78,f,"Famous Soviet and Russian scientist, Professor, inventor"
+236,79,t,12 June 1990
+237,79,f,12 December 1993
+238,79,f,7 November 1917
+239,80,f,Putin Vladimir Vladimirovich
+240,80,t,Yeltsin Boris Nikolaevich
+241,80,f,Dmitry Medvedev
+242,81,t,Reforms of transformation in the economy and public administration
+243,81,f,of the Reform conversion in the theatre and cinematography
+244,81,f,of the Reform conversion in space activities and aviation
+245,82,f,12 June 1990
+246,82,t,12 December 1993
+247,82,f,7 November 1917
+248,83,f,Mononational state
+249,83,t,Multinational state
+250,83,f,
+251,84,f,Ukrainian
+252,84,t,Russian
+253,84,f,Belarusian
+254,85,f,St, Petersburg
+255,85,f,Yekaterinburg
+256,85,t,Moscow
+257,86,t,Red Square
+258,86,f,Manezhnaya square
+259,86,f,victory Square
+260,87,t,2000-2014
+261,87,f,1991-2000
+262,87,f,1980-1990
+263,88,f,Dmitry Medvedev
+264,88,t,Putin Vladimir Vladimirovich
+265,88,f,Alexander Lukashenko
+266,89,f,Tatarstan
+267,89,t,Republic of Crimea
+268,89,f,Republic of Bashkortostan
+269,90,f,Patriarch Filaret
+270,90,t,Patriarch Kirill
+271,90,f,Patriarch Benedict XVI
+272,91,f,the Central Council of the Muslims of Russia
+273,91,f,Central Committee of Muslims of Russia
+274,91,t,Central spiritual administration of Muslims of Russia
+275,92,f,In Moscow
+276,92,f,In St, Petersburg
+277,92,t,Sochi
+278,93,t,1 January
+279,93,f,1 September
+280,93,f,1 March
+281,94,f,New year
+282,94,f,Constitution Day
+283,94,t,Christmas
+284,95,f,international women's day
+285,95,t,defender of the Fatherland Day
+286,95,f,Russia Day
+287,96,f,defender of the Fatherland Day
+288,96,f,Russia Day
+289,96,t,international women's day
+290,97,f,defender of the Fatherland Day
+291,97,t,Russia Day
+292,97,f,international women's day
+293,98,f,defender of the Fatherland Day
+294,98,f,Russia Day
+295,98,t,national unity Day
+296,99,t,Constitution Day
+297,99,f,defender of the Fatherland Day
+298,99,f,Russia Day
