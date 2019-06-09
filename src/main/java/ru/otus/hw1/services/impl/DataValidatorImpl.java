@@ -1,5 +1,6 @@
 package ru.otus.hw1.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.otus.hw1.dao.Dao;
 import ru.otus.hw1.model.Answer;
 import ru.otus.hw1.model.Question;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+@Service
 public class DataValidatorImpl implements DataValidator {
 
     private final Dao<Question> questionDao;

@@ -1,5 +1,6 @@
 package ru.otus.hw1.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.otus.hw1.dao.AnswerDao;
 import ru.otus.hw1.dao.QuestionDao;
 import ru.otus.hw1.model.Answer;
@@ -10,6 +11,7 @@ import ru.otus.hw1.utils.DataValidationException;
 import java.util.List;
 import java.util.Random;
 
+@Service
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionDao questionDao;

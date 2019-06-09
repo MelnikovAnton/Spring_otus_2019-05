@@ -1,6 +1,7 @@
 package ru.otus.hw1.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import ru.otus.hw1.model.Answer;
 import ru.otus.hw1.model.Question;
 import ru.otus.hw1.model.User;
@@ -15,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 @Slf4j
 public class QuizImpl implements Quiz {
     private final QuestionService questionService;
