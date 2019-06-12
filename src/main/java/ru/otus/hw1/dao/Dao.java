@@ -12,8 +12,6 @@ import java.util.List;
 
 public interface Dao<T> {
 
-    static final Logger log = LoggerFactory.getLogger(Dao.class);
-
     List<T> getAll();
 
     T getById(int id) throws DataValidationException;
@@ -21,13 +19,4 @@ public interface Dao<T> {
     int getCount();
 
     void reloadData(Resource resource);
-
-    default String checkLocalized(String resourceName, String locale) {
-        String localized = resourceName.replace(".csv", "_" + locale + ".csv");
-        URL u = Config.class.getResource("/" + localized);
-        if (u == null) {
-            log.warn("No localized resources: {}. Return default {}", localized, resourceName);
-            return resourceName;
-        } else return localized;
-    }
 }
