@@ -1,8 +1,9 @@
 package ru.otus.hw1;
 
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.otus.hw1.dao.AnswerDao;
 import ru.otus.hw1.dao.QuestionDao;
 import ru.otus.hw1.model.Answer;
@@ -11,22 +12,24 @@ import ru.otus.hw1.services.QuestionService;
 import ru.otus.hw1.services.impl.QuestionServiceImpl;
 import ru.otus.hw1.utils.DataValidationException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+
 
 class QuestionServiceTest {
 
+
     @Test
     void testWithSpringContext() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("question-context.xml");
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(Config.class);
         QuestionService service = context.getBean(QuestionService.class);
         List<Question> all = assertDoesNotThrow(service::readAll);
         int id = all.get(0).getId();
@@ -34,60 +37,54 @@ class QuestionServiceTest {
         assertEquals(all.get(0), question);
     }
 
-    @RepeatedTest(10)
-    void readById() throws DataValidationException {
-        List<Question> questions = IntStream.range(1, 10)
-                .mapToObj(i -> new Question(i, "Test" + i))
-                .collect(Collectors.toList());
-
-
-        AnswerDao answerDao = mock(AnswerDao.class);
-        QuestionDao questionDao = mock(QuestionDao.class);
-
-
-        when(questionDao.getById(anyInt())).thenAnswer(i -> questions.get(i.getArgument(0)));
-
-
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void readById(int id) throws DataValidationException {
+        QuestionDao questionDao = getQuestionDaoMock();
+        AnswerDao answerDao = getEmptyAnswerDao();
         QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-        int id = new Random().nextInt(9);
         String q = service.readById(id).getQuestion();
-//        System.out.println(q);
-        assertEquals("Test" + (id + 1), q);
+        assertEquals("Test" + id, q);
     }
 
-    @Test
-    void randomTest() throws DataValidationException {
-        List<Question> questions = IntStream.range(1, 10)
-                .mapToObj(i -> new Question(i, "Test" + i))
-                .collect(Collectors.toList());
 
-
-        AnswerDao answerDao = mock(AnswerDao.class);
-        QuestionDao questionDao = mock(QuestionDao.class);
-
-        when(questionDao.getCount()).thenReturn(questions.size());
-        when(questionDao.getById(anyInt())).thenAnswer(i -> questions.get((Integer)i.getArgument(0)-1));
-
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void getAnswers(int id) throws DataValidationException {
+        QuestionDao questionDao = getQuestionDaoMock();
+        AnswerDao answerDao = getAnswersDaoMock();
         QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-
-        List<Question> randomQuestions = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            Question question = service.getRandom();
-            String q = question.getQuestion();
-            randomQuestions.add(question);
-            assertEquals(Integer.parseInt(q.substring(4)), question.getId());
-        }
-      //  questions.add(new Question(20,"Wrong"));
-        assertTrue(randomQuestions.containsAll(questions));
-
+        List<Answer> answers = service.getAnswers(id);
+        assertEquals(answers.get(0).getId(), id * 3);
     }
 
-    @Test
-    void getAnswers() throws DataValidationException {
-        List<Question> questions = IntStream.range(1, 10)
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void getCorrectAnswer(int id) throws DataValidationException {
+        QuestionDao questionDao = getQuestionDaoMock();
+        AnswerDao answerDao = getAnswersDaoMock();
+        QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
+        Answer answer = service.getCorrectAnswer(id);
+        assertEquals(answer.getAnswer(), "ans1");
+    }
+
+    private QuestionDao getQuestionDaoMock() throws DataValidationException {
+        List<Question> questions = IntStream.range(0, 10)
                 .mapToObj(i -> new Question(i, "Test" + i))
                 .collect(Collectors.toList());
+        QuestionDao questionDao = mock(QuestionDao.class);
+        when(questionDao.getById(anyInt()))
+                .thenAnswer(i -> questions.get(i.getArgument(0)));
+        when(questionDao.getAll())
+                .thenReturn(questions);
+        when(questionDao.getCount()).thenReturn(questions.size());
+        return questionDao;
+    }
 
+    private AnswerDao getAnswersDaoMock() throws DataValidationException {
+        QuestionDao questionDao = getQuestionDaoMock();
+        List<Question> questions = questionDao.getAll();
         List<Answer> answers = questions.stream()
                 .map(Question::getId)
                 .map(id -> Stream.of(new Answer(id * 3, id, true, "ans1"),
@@ -96,66 +93,15 @@ class QuestionServiceTest {
                 .flatMap(Function.identity())
                 .collect(Collectors.toList());
 
-
-        QuestionDao questionDao = mock(QuestionDao.class);
-        when(questionDao.getCount()).thenReturn(questions.size());
-        when(questionDao.getById(anyInt())).thenAnswer(i -> questions.get(i.getArgument(0)));
-
         AnswerDao answerDao = mock(AnswerDao.class);
-        when(answerDao.getByQuestionId(anyInt())).thenAnswer(i-> answers.stream()
-                    .filter(a->a.getQuestionId()==(Integer) i.getArgument(0))
-                    .collect(Collectors.toList()));
-
-
-        QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-
-        for (int i = 0; i < 100 ; i++) {
-            Random random= new Random();
-
-            int id=random.nextInt(9)+1;
-            List<Answer> ans = service.getAnswers(id);
-            assertIterableEquals(ans,answers.stream()
-                    .filter(a->a.getQuestionId()==id)
-                    .collect(Collectors.toList()));
-       //     System.out.println(ans);
-        }
-
-
-    }
-
-    @Test
-    void getCorrectAnswer() throws DataValidationException {
-        List<Question> questions = IntStream.range(1, 10)
-                .mapToObj(i -> new Question(i, "Test" + i))
-                .collect(Collectors.toList());
-
-        List<Answer> answers = questions.stream()
-                .map(Question::getId)
-                .map(id -> Stream.of(new Answer(id * 3, id, true, "ans1"),
-                        new Answer(id * 3 + 1, id, false, "ans2"),
-                        new Answer(id * 3 + 2, id, false, "ans3")))
-                .flatMap(Function.identity())
-                .collect(Collectors.toList());
-
-
-        QuestionDao questionDao = mock(QuestionDao.class);
-        when(questionDao.getCount()).thenReturn(questions.size());
-        when(questionDao.getById(anyInt())).thenAnswer(i -> questions.get(i.getArgument(0)));
-
-        AnswerDao answerDao = mock(AnswerDao.class);
-        when(answerDao.getByQuestionId(anyInt())).thenAnswer(i-> answers.stream()
-                .filter(a->a.getQuestionId()==(Integer) i.getArgument(0))
+        when(answerDao.getByQuestionId(anyInt())).thenAnswer(i -> answers.stream()
+                .filter(a -> a.getQuestionId() == (Integer) i.getArgument(0))
                 .collect(Collectors.toList()));
+        return answerDao;
+    }
 
-
-        QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-
-        for (int i = 0; i < 100 ; i++) {
-            Random random= new Random();
-
-            int id=random.nextInt(9)+1;
-           Answer ans = service.getCorrectAnswer(id);
-            assertEquals(ans,new Answer(id * 3, id, true, "ans1"));
-        }
+    private AnswerDao getEmptyAnswerDao() {
+        AnswerDao answerDao = mock(AnswerDao.class);
+        return answerDao;
     }
 }

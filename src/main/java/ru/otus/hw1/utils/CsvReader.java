@@ -10,6 +10,7 @@ import java.util.List;
 
 public class CsvReader {
 
+    @SuppressWarnings("deprecation")
     public static <T> List<T> readData(Resource resource, Class<T> clazz ){
         BeanListProcessor<T> rowProcessor = new BeanListProcessor<T>(clazz);
 

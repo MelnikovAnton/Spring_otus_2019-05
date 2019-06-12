@@ -1,6 +1,10 @@
 package ru.otus.hw1.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
 import ru.otus.hw1.model.Answer;
 import ru.otus.hw1.model.Question;
 import ru.otus.hw1.model.User;
@@ -18,11 +22,15 @@ import java.util.stream.Collectors;
 @Slf4j
 public class QuizImpl implements Quiz {
     private final QuestionService questionService;
+    private final MessageSource messageSource;
+    private final int requiredAnswers;
     private Scanner sc;
     private PrintStream out;
 
-    public QuizImpl(QuestionService questionService) {
+    public QuizImpl(QuestionService questionService, MessageSource messageSource,int requiredAnswers) {
         this.questionService = questionService;
+        this.messageSource = messageSource;
+        this.requiredAnswers = requiredAnswers;
     }
 
     @Override
@@ -36,9 +44,9 @@ public class QuizImpl implements Quiz {
     }
 
     private User getUser() {
-        out.print("Введите ваше имя:\n");
+        out.print(messageSource.getMessage("input.name", null, Locale.getDefault()));
         String name = sc.next();
-        out.print("Введите вашe фамилию:\n");
+        out.print(messageSource.getMessage("input.surname", null, Locale.getDefault()));
         String surname = sc.next();
         return new User(name, surname);
     }
@@ -66,24 +74,25 @@ public class QuizImpl implements Quiz {
     private Question getRandom(User user) {
         Question question;
         try {
-            question= questionService.getRandom();
+            question = questionService.getRandom();
         } catch (DataValidationException e) {
             log.warn(e.getMessage());
-            question= getRandom(user);
+            question = getRandom(user);
         }
-        if (user.getAnswers().containsKey(question)) question=getRandom(user);
+        if (user.getAnswers().containsKey(question)) question = getRandom(user);
         return question;
     }
 
     private int inputAnswer(int max) {
-        out.print("Введите ответ:\n");
- //       Scanner scan = new Scanner(in);
+        out.print(messageSource.getMessage("input.answer", null, Locale.getDefault()));
+        //       Scanner scan = new Scanner(in);
         try {
             int rez = sc.nextInt();
-            if (rez > 0 && rez < 4) return rez;
+            if (rez > 0 && rez < max) return rez;
             else throw new InputMismatchException();
         } catch (InputMismatchException e) {
-            out.println("Необходимо ввести число от 1 до " + (max - 1));
+            out.println(messageSource.getMessage("input.wrong", new Integer[]{(max - 1)}, Locale.getDefault()));
+            if (sc.hasNext()) sc.next();
             return inputAnswer(max);
         }
     }
@@ -96,10 +105,16 @@ public class QuizImpl implements Quiz {
                 .filter(Answer::isCorrect)
                 .collect(Collectors.toList());
         int rez = correctList.size();
-        String str = String.format("%s ваша оценка %d", user.getName(), rez);
+        String str = messageSource.getMessage("output.score", new String[]{user.getName(), String.valueOf(rez)}, Locale.getDefault());//String.format("%s ваша оценка %d", user.getName(), rez);
         out.println(str);
+        if (rez >= requiredAnswers) {
+            out.println(messageSource.getMessage("output.passed", null, Locale.getDefault()));
+        }
+        else {
+            out.println(messageSource.getMessage("output.failed", null, Locale.getDefault()));
+        }
         if (rez < 5) {
-            out.println("Вы не правильно ответили на вопросы:");
+            out.println(messageSource.getMessage("output.answered.wrong", null, Locale.getDefault()));
             user.getAnswers().entrySet().stream()
                     .filter(e -> !e.getValue().isCorrect())
                     .forEach(e -> {
@@ -109,8 +124,8 @@ public class QuizImpl implements Quiz {
                         String ans = e.getValue().getAnswer();
                         out.println("==================================");
                         out.println(q);
-                        out.println("Правильный ответ: " + correct);
-                        out.println("Ваш ответ: " + ans);
+                        out.println(messageSource.getMessage("output.correct.answer", new String[]{correct}, Locale.getDefault()));
+                        out.println(messageSource.getMessage("output.correct.answer", new String[]{ans}, Locale.getDefault()));
 
                     });
         }

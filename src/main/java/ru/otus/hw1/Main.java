@@ -2,10 +2,16 @@ package ru.otus.hw1;
 
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.otus.hw1.services.DataValidator;
 import ru.otus.hw1.services.Quiz;
 import ru.otus.hw1.utils.DataValidationException;
+
+import java.util.Locale;
+import java.util.Properties;
 
 @Slf4j
 public class Main {
@@ -15,7 +21,10 @@ public class Main {
         log.info("file encodind before : {}",System.getProperty("file.encoding"));
         System.setProperty("file.encoding", "UTF-8");
         log.info("file encodind after: {} ",System.getProperty("file.encoding"));
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+
+
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(Config.class);
         DataValidator validator = context.getBean(DataValidator.class);
         try {
             log.info("Start Data validation");
