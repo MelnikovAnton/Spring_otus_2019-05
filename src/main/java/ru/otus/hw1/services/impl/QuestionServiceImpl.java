@@ -1,6 +1,8 @@
 package ru.otus.hw1.services.impl;
 
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import ru.otus.hw1.config.Config;
 import ru.otus.hw1.dao.AnswerDao;
 import ru.otus.hw1.dao.QuestionDao;
 import ru.otus.hw1.model.Answer;
@@ -8,6 +10,7 @@ import ru.otus.hw1.model.Question;
 import ru.otus.hw1.services.QuestionService;
 import ru.otus.hw1.utils.DataValidationException;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Random;
 
@@ -16,6 +19,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionDao questionDao;
     private final AnswerDao answerDao;
+
 
     final Random random = new Random();
 
@@ -51,4 +55,16 @@ public class QuestionServiceImpl implements QuestionService {
                 .filter(Answer::isCorrect)
                 .findFirst().get();
     }
+
+    @Override
+    public void reloadQuestions(Resource localized) {
+        questionDao.reloadData(localized);
+    }
+
+    @Override
+    public void reloadAnswer(Resource localized){
+        answerDao.reloadData(localized);
+    }
+
+
 }

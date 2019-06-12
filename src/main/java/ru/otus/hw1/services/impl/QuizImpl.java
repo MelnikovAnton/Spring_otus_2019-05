@@ -1,10 +1,11 @@
 package ru.otus.hw1.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import ru.otus.hw1.config.ApplicationSettings;
+import ru.otus.hw1.config.Config;
 import ru.otus.hw1.model.Answer;
 import ru.otus.hw1.model.Question;
 import ru.otus.hw1.model.User;
@@ -15,6 +16,7 @@ import ru.otus.hw1.utils.DataValidationException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,23 +26,31 @@ public class QuizImpl implements Quiz {
     private final QuestionService questionService;
     private final MessageSource messageSource;
     private final int requiredAnswers;
+    private final ApplicationSettings settings;
     private Scanner sc;
     private PrintStream out;
 
-    public QuizImpl(QuestionService questionService, MessageSource messageSource,int requiredAnswers) {
+    public QuizImpl(QuestionService questionService, MessageSource messageSource, int requiredAnswers, ApplicationSettings settings) {
         this.questionService = questionService;
         this.messageSource = messageSource;
         this.requiredAnswers = requiredAnswers;
+        this.settings = settings;
     }
 
     @Override
     public void initQuiz(InputStream in, OutputStream out) {
         this.sc = new Scanner(in, StandardCharsets.UTF_8);
         this.out = new PrintStream(out);
-
+        checkLocale();
         User user = getUser();
         startQuiz(user);
         printResult(user);
+    }
+
+    private void checkLocale() {
+        out.println(messageSource.getMessage("input.selectLang", null, Locale.getDefault()));
+        String lang = sc.next();
+        changeLocale(lang);
     }
 
     private User getUser() {
@@ -109,8 +119,7 @@ public class QuizImpl implements Quiz {
         out.println(str);
         if (rez >= requiredAnswers) {
             out.println(messageSource.getMessage("output.passed", null, Locale.getDefault()));
-        }
-        else {
+        } else {
             out.println(messageSource.getMessage("output.failed", null, Locale.getDefault()));
         }
         if (rez < 5) {
@@ -129,5 +138,24 @@ public class QuizImpl implements Quiz {
 
                     });
         }
+    }
+
+
+    private void changeLocale(String locale) {
+        Locale.setDefault(Locale.forLanguageTag(locale));
+        Resource questionResource = new ClassPathResource(checkLocalized(settings.getQuestion(), locale));
+        questionService.reloadQuestions(questionResource);
+
+        Resource answerResource = new ClassPathResource(checkLocalized(settings.getAnswer(), locale));
+        questionService.reloadAnswer(answerResource);
+    }
+
+    private String checkLocalized(String resourceName, String locale) {
+        String localized = resourceName.replace(".csv", "_" + locale + ".csv");
+        URL u = Config.class.getResource("/" + localized);
+        if (u == null) {
+            log.warn("No localized resources: {}. Return default {}", localized, resourceName);
+            return resourceName;
+        } else return localized;
     }
 }

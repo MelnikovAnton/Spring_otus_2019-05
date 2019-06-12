@@ -1,7 +1,6 @@
-package ru.otus.hw1;
+package ru.otus.hw1.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,13 +37,13 @@ public class Config {
     @Bean("question")
     Resource questionsResource() {
         String value = settings.getQuestion();
-        return new ClassPathResource(checkLocalized(value));
+        return new ClassPathResource(checkLocalized(value,settings.getLocale()));
     }
 
     @Bean("answer")
     Resource answerResource() {
         String value = settings.getAnswer();
-        return new ClassPathResource(checkLocalized(value));
+        return new ClassPathResource(checkLocalized(value,settings.getLocale()));
     }
 
 
@@ -63,11 +62,10 @@ public class Config {
     Quiz getQuiz(QuestionService questionService,
                  MessageSource messageSource) {
         int required=settings.getRequired();
-        return new QuizImpl(questionService, messageSource, required);
+        return new QuizImpl(questionService, messageSource, required, settings);
     }
 
-    private String checkLocalized(String resourceName) {
-        String locale=settings.getLocale();
+    private String checkLocalized(String resourceName,String locale) {
         String localized = resourceName.replace(".csv", "_" + locale + ".csv");
         URL u = Config.class.getResource("/" + localized);
         if (u == null) {

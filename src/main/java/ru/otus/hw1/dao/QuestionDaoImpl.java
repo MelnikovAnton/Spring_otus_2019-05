@@ -39,4 +39,10 @@ public class QuestionDaoImpl implements QuestionDao{
     public int getCount() {
         return questions.size();
     }
+
+    @Override
+    public void reloadData(Resource resource) {
+        this.questions.clear();
+        this.questions.addAll(CsvReader.readData(resource,Question.class));
+    }
 }

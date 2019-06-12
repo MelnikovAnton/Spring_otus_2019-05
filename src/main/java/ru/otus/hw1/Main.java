@@ -12,7 +12,6 @@ import ru.otus.hw1.utils.DataValidationException;
 @SpringBootApplication
 public class Main {
 
-
     public static void main(String[] args) {
 
         log.info("file encodind before : {}", System.getProperty("file.encoding"));

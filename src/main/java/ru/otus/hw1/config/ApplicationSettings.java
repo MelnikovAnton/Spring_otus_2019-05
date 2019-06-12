@@ -1,4 +1,4 @@
-package ru.otus.hw1;
+package ru.otus.hw1.config;
 
 import lombok.Getter;
 import lombok.Setter;
