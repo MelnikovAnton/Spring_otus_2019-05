@@ -1,9 +1,13 @@
 package ru.otus.hw1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw1.dao.AnswerDao;
 import ru.otus.hw1.dao.QuestionDao;
 import ru.otus.hw1.model.Answer;
@@ -22,15 +26,15 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class QuestionServiceTest {
 
+    @Autowired
+    private QuestionService service;
 
     @Test
     void testWithSpringContext() {
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(Config.class);
-        QuestionService service = context.getBean(QuestionService.class);
         List<Question> all = assertDoesNotThrow(service::readAll);
         int id = all.get(0).getId();
         Question question = assertDoesNotThrow(() -> service.readById(id));

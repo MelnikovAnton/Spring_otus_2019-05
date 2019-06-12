@@ -1,7 +1,12 @@
 package ru.otus.hw1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw1.dao.AnswerDao;
 import ru.otus.hw1.dao.Dao;
 import ru.otus.hw1.dao.QuestionDao;
@@ -18,14 +23,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class DataValidatorTest {
+
+    @Autowired
+    private DataValidator dataValidator;
 
 
     @Test
     void validateWithSpringContext() {
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(Config.class);
-        DataValidator dataValidator = context.getBean(DataValidator.class);
         assertDoesNotThrow(dataValidator::validate);
     }
 

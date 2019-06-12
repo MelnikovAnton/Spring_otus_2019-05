@@ -19,8 +19,6 @@ import java.net.URL;
 import java.util.Locale;
 
 @Configuration
-@ComponentScan
-@PropertySource("classpath:/application.properties")
 @Slf4j
 public class Config {
 

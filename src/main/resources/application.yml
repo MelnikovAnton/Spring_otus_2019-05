@@ -1,0 +1,8 @@
+answer: answers.csv
+question: questions.csv
+locale: en
+#locale: ru
+required: 3
+
+application:
+  title: HW3
