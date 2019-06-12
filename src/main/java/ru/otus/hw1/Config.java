@@ -51,7 +51,7 @@ public class Config {
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
-        Locale.setDefault(new Locale(locale));
+        Locale.setDefault(Locale.forLanguageTag(locale));
         return messageSource;
     }
 
