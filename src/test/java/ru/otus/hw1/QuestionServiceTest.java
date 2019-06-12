@@ -1,12 +1,13 @@
 package ru.otus.hw1;
 
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw1.dao.AnswerDao;
 import ru.otus.hw1.dao.QuestionDao;
@@ -41,37 +42,47 @@ class QuestionServiceTest {
         assertEquals(all.get(0), question);
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void readById(int id) throws DataValidationException {
+    @TestFactory
+    Stream<DynamicTest> readById() throws DataValidationException {
         QuestionDao questionDao = getQuestionDaoMock();
         AnswerDao answerDao = getEmptyAnswerDao();
         QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-        String q = service.readById(id).getQuestion();
-        assertEquals("Test" + id, q);
+        return IntStream.range(1, 10)
+                .mapToObj(i -> DynamicTest.dynamicTest("Get Question by ID " + i,
+                        () -> {
+                            String q = service.readById(i).getQuestion();
+                            assertEquals("Test" + i, q);
+                        }));
     }
 
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void getAnswers(int id) throws DataValidationException {
+    @TestFactory
+    Stream<DynamicTest> getAnswers() throws DataValidationException {
         QuestionDao questionDao = getQuestionDaoMock();
         AnswerDao answerDao = getAnswersDaoMock();
         QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-        List<Answer> answers = service.getAnswers(id);
-        assertEquals(answers.get(0).getId(), id * 3);
+        return IntStream.range(1, 10)
+                .mapToObj(i -> DynamicTest.dynamicTest("Get answer id " + i,
+                        () -> {
+                            List<Answer> answers = service.getAnswers(i);
+                            assertEquals(answers.get(0).getId(), i * 3);
+                        }));
     }
 
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void getCorrectAnswer(int id) throws DataValidationException {
+    @TestFactory
+    Stream<DynamicTest> getCorrectAnswer() throws DataValidationException {
         QuestionDao questionDao = getQuestionDaoMock();
         AnswerDao answerDao = getAnswersDaoMock();
         QuestionService service = new QuestionServiceImpl(questionDao, answerDao);
-        Answer answer = service.getCorrectAnswer(id);
-        assertEquals(answer.getAnswer(), "ans1");
+        return IntStream.range(1, 10)
+                .mapToObj(i -> DynamicTest.dynamicTest("Get correct answer " + i,
+                        () -> {
+                            Answer answer = service.getCorrectAnswer(i);
+                            assertEquals(answer.getAnswer(), "ans1");
+                        }));
     }
+
 
     private QuestionDao getQuestionDaoMock() throws DataValidationException {
         List<Question> questions = IntStream.range(0, 10)
