@@ -46,4 +46,10 @@ public class AnswerDaoImpl implements AnswerDao {
     public int getCount() {
         return answers.size();
     }
+
+    @Override
+    public void reloadData(Resource resource) {
+        this.answers.clear();
+        this.answers.addAll(CsvReader.readData(resource, Answer.class));
+    }
 }
