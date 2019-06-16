@@ -3,8 +3,8 @@
 #### Перевести приложение для проведения опросов на Spring Shell
 
 ##### Описание задания:
-- [ ] Подключить Spring Shell, используя starter.
-- [ ] Написать юнит-тесты и использовать spring-boot-test-starter
+- [x] Подключить Spring Shell, используя starter.
+- [x] Написать юнит-тесты и использовать spring-boot-test-starter
 
 
 
