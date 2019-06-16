@@ -66,7 +66,7 @@ public class MyShell implements PromptProvider {
                 , Locale.getDefault());
 
 
-        String isPassed = (result > settings.getRequired()) ?
+        String isPassed = (result >= settings.getRequired()) ?
                 messageSource.getMessage("output.passed"
                         , null
                         , Locale.getDefault())
