@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
@@ -37,13 +38,13 @@ public class Config {
     @Bean("question")
     Resource questionsResource() {
         String value = settings.getQuestion();
-        return new ClassPathResource(checkLocalized(value,settings.getLocale()));
+        return new ClassPathResource(checkLocalized(value, settings.getLocale()));
     }
 
     @Bean("answer")
     Resource answerResource() {
         String value = settings.getAnswer();
-        return new ClassPathResource(checkLocalized(value,settings.getLocale()));
+        return new ClassPathResource(checkLocalized(value, settings.getLocale()));
     }
 
 
@@ -59,13 +60,20 @@ public class Config {
     }
 
     @Bean
-    Quiz getQuiz(QuestionService questionService,
-                 MessageSource messageSource) {
-        int required=settings.getRequired();
-        return new QuizImpl(questionService, messageSource, required, settings);
+    @Profile("shell")
+    Quiz getShellQuiz(QuestionService questionService,
+                      MessageSource messageSource) {
+        return new QuizImpl(questionService, messageSource, settings);
     }
 
-    private String checkLocalized(String resourceName,String locale) {
+    @Bean(initMethod = "startQuiz")
+    @Profile("console")
+    Quiz getConsoleQuiz(QuestionService questionService,
+                        MessageSource messageSource) {
+        return new QuizImpl(questionService, messageSource, settings);
+    }
+
+    private String checkLocalized(String resourceName, String locale) {
         String localized = resourceName.replace(".csv", "_" + locale + ".csv");
         URL u = Config.class.getResource("/" + localized);
         if (u == null) {

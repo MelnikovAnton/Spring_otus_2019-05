@@ -1,5 +1,6 @@
 package ru.otus.hw1.services.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.otus.hw1.dao.Dao;
 import ru.otus.hw1.model.Answer;
@@ -7,11 +8,13 @@ import ru.otus.hw1.model.Question;
 import ru.otus.hw1.services.DataValidator;
 import ru.otus.hw1.utils.DataValidationException;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class DataValidatorImpl implements DataValidator {
 
     private final Dao<Question> questionDao;
@@ -20,6 +23,19 @@ public class DataValidatorImpl implements DataValidator {
     public DataValidatorImpl(Dao<Question> questionDao, Dao<Answer> answerDao) {
         this.questionDao = questionDao;
         this.answerDao = answerDao;
+    }
+
+
+    @PostConstruct
+    public void start() {
+        try {
+            log.info("Start Data validation");
+            validate();
+        } catch (DataValidationException e) {
+            System.out.println("Целостность данных нарушена. Запуск программы не возможен.");
+            log.error("Data validation Error! Stop program.", e);
+            System.exit(0);
+        }
     }
 
     @Override
