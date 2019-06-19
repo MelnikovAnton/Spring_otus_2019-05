@@ -1,10 +1,14 @@
 package ru.otus.hw1;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.shell.jline.InteractiveShellApplicationRunner;
+import org.springframework.shell.jline.ScriptShellApplicationRunner;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw1.dao.AnswerDao;
@@ -24,7 +28,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(properties = {
+        InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false"})
+@ActiveProfiles(profiles = "shell")
 class DataValidatorTest {
 
     @Autowired
@@ -37,6 +43,7 @@ class DataValidatorTest {
     }
 
     @Test
+    @DisplayName("Проверка не уникальных вопросов.")
     void validateNoUnicQuestionId() {
         Dao<Question> questionDao = getNotUnicQuestionId();
         Dao<Answer> answerDao = getEmptyAnswerDao();
@@ -48,6 +55,7 @@ class DataValidatorTest {
     }
 
     @Test
+    @DisplayName("Проверка наличия более одного правильного ответа.")
     void validateNoCorrectAnswer() {
 
         Dao<Question> questionDao = getOneQuestion();
@@ -59,6 +67,7 @@ class DataValidatorTest {
     }
 
     @Test
+    @DisplayName("Проверка отсутствия ответа.")
     void validateNoAnswer() {
         Dao<Question> questionDao = getOneQuestion();
         Dao<Answer> answerDao = getEmptyAnswerDao();

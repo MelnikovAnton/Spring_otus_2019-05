@@ -4,4 +4,25 @@ application:
   locale: en
   #locale: ru
   required: 3
-  title: HW3
+  title: HW4 Spring-Shell
+
+
+spring:
+  profiles:
+    active: shell
+
+---
+spring:
+  profiles: shell
+
+  shell:
+    interactive:
+      enabled: true
+
+---
+spring:
+  profiles: console
+
+  shell:
+    interactive:
+      enabled: false

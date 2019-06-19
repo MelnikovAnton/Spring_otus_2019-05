@@ -1,12 +1,13 @@
 package ru.otus.hw1;
 
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
+import org.springframework.shell.jline.InteractiveShellApplicationRunner;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.hw1.services.Quiz;
@@ -23,7 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:/application_en.properties")
-@SpringBootTest
+@SpringBootTest(properties = {
+        InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false"})
+@ActiveProfiles(profiles = "shell")
 public class QuizImplTest {
 
 
@@ -48,6 +51,7 @@ public class QuizImplTest {
             ByteArrayInputStream in = new ByteArrayInputStream(inputEN.getBytes());
             OutputStream out = new ByteArrayOutputStream();
             assertDoesNotThrow(() -> quiz.initQuiz(in, out));
+            assertDoesNotThrow(() -> quiz.startQuiz());
             String result = out.toString();
             assertTrue(
                     result.contains(messageSource.getMessage("input.wrong",
@@ -60,6 +64,7 @@ public class QuizImplTest {
             ByteArrayInputStream in = new ByteArrayInputStream(inputRU.getBytes());
             OutputStream out = new ByteArrayOutputStream();
             assertDoesNotThrow(() -> quiz.initQuiz(in, out));
+            assertDoesNotThrow(() -> quiz.startQuiz());
             String result = out.toString();
             assertTrue(
                     result.contains(messageSource.getMessage("input.wrong",
@@ -73,6 +78,7 @@ public class QuizImplTest {
             ByteArrayInputStream in = new ByteArrayInputStream(inputRU.getBytes());
             OutputStream out = new ByteArrayOutputStream();
             assertDoesNotThrow(() -> quiz.initQuiz(in, out));
+            assertDoesNotThrow(() -> quiz.startQuiz());
             String result = out.toString();
             assertTrue(
                     result.contains(messageSource.getMessage("input.wrong",
@@ -81,6 +87,6 @@ public class QuizImplTest {
             );
 
         });
-        return Arrays.asList(test1,test2,test3);
+        return Arrays.asList(test1, test2, test3);
     }
 }

@@ -30,10 +30,10 @@ public class QuizImpl implements Quiz {
     private Scanner sc;
     private PrintStream out;
 
-    public QuizImpl(QuestionService questionService, MessageSource messageSource, int requiredAnswers, ApplicationSettings settings) {
+    public QuizImpl(QuestionService questionService, MessageSource messageSource, ApplicationSettings settings) {
         this.questionService = questionService;
         this.messageSource = messageSource;
-        this.requiredAnswers = requiredAnswers;
+        this.requiredAnswers = settings.getRequired();
         this.settings = settings;
     }
 
@@ -41,6 +41,11 @@ public class QuizImpl implements Quiz {
     public void initQuiz(InputStream in, OutputStream out) {
         this.sc = new Scanner(in, StandardCharsets.UTF_8);
         this.out = new PrintStream(out);
+    }
+
+    @Override
+    public void startQuiz() {
+        if (sc == null || out == null) initQuiz(System.in, System.out);
         checkLocale();
         User user = getUser();
         startQuiz(user);
@@ -61,7 +66,8 @@ public class QuizImpl implements Quiz {
         return new User(name, surname);
     }
 
-    private User startQuiz(User user) {
+    @Override
+    public User startQuiz(User user) {
         Map<Question, Answer> userAnswers = user.getAnswers();
         for (int i = 0; i < 5; i++) {
             out.println();
@@ -108,13 +114,9 @@ public class QuizImpl implements Quiz {
     }
 
 
-    private void printResult(User user) {
-        List<Answer> correctList = user.getAnswers()
-                .values()
-                .stream()
-                .filter(Answer::isCorrect)
-                .collect(Collectors.toList());
-        int rez = correctList.size();
+    @Override
+    public void printResult(User user) {
+        int rez = getResult(user);
         String str = messageSource.getMessage("output.score", new String[]{user.getName(), String.valueOf(rez)}, Locale.getDefault());//String.format("%s ваша оценка %d", user.getName(), rez);
         out.println(str);
         if (rez >= requiredAnswers) {
@@ -138,6 +140,16 @@ public class QuizImpl implements Quiz {
 
                     });
         }
+    }
+
+    @Override
+    public int getResult(User user) {
+        List<Answer> correctList = user.getAnswers()
+                .values()
+                .stream()
+                .filter(Answer::isCorrect)
+                .collect(Collectors.toList());
+        return correctList.size();
     }
 
 
