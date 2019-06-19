@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import ru.otus.hw1.services.QuestionService;
 import ru.otus.hw1.services.Quiz;
+import ru.otus.hw1.services.impl.QuizConsoleImpl;
 import ru.otus.hw1.services.impl.QuizImpl;
 
 import java.net.URL;
@@ -70,7 +71,7 @@ public class Config {
     @Profile("console")
     Quiz getConsoleQuiz(QuestionService questionService,
                         MessageSource messageSource) {
-        return new QuizImpl(questionService, messageSource, settings);
+        return new QuizConsoleImpl(questionService, messageSource, settings);
     }
 
     private String checkLocalized(String resourceName, String locale) {
